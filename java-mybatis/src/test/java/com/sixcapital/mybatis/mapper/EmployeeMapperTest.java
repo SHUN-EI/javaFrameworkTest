@@ -5,6 +5,8 @@ import com.sixcapital.mybatis.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,15 +15,80 @@ import java.util.List;
 public class EmployeeMapperTest {
 
     @Test
-    public void testEmployeeMapper() {
+    public void getEmployeelistTest() {
         //获取sqlSession对象
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         //获取Mapper对象
         EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-         List<Employee> employeelist = mapper.getEmployeelist();
+        List<Employee> employeelist = mapper.getEmployeelist();
 
         employeelist.forEach(e -> System.out.println(e));
         //关闭sqlSession
+        sqlSession.close();
+    }
+
+    @Test
+    public void getEmployeeByEmpnoTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+        Employee employee = mapper.getEmployeeByEmpno(1002);
+
+        System.out.println(employee);
+        //关闭sqlSession
+        sqlSession.close();
+    }
+
+    @Test
+    public void addEmployeeTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+        Employee employee = new Employee(1108, "奥巴马", "经理", 1006, new Date(), new BigDecimal(16000), 20);
+        int result = mapper.addEmployee(employee);
+
+        if (result > 0) {
+            System.out.println("添加员工操作成功");
+        }
+
+        //提交事务
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void updateEmployeeTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        int result = mapper.updateEmployee(new Employee(1108, "奥巴马22", "工程师", 1006, new Date(), new BigDecimal(16000), 20));
+        if (result > 0) {
+            System.out.println("修改员工操作成功");
+        }
+
+        //提交事务
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void deleteEmployeeTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        int result = mapper.deleteEmployee(1108);
+        if (result > 0) {
+            System.out.println("删除员工操作成功");
+        }
+
+        //提交事务
+        sqlSession.commit();
         sqlSession.close();
     }
 }

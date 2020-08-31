@@ -9,4 +9,12 @@ import java.util.List;
  */
 public interface EmployeeMapper {
     List<Employee> getEmployeelist();
+
+    Employee getEmployeeByEmpno(int empNo);
+
+    int addEmployee(Employee employee);
+
+    int updateEmployee(Employee employee);
+
+    int deleteEmployee(int empNo);
 }
