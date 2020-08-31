@@ -1,6 +1,7 @@
 package com.sixcapital.mybatis.mapper;
 
 import com.sixcapital.mybatis.entity.Employee;
+import org.apache.ibatis.type.Alias;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 /**
  * Created by mo on 2020/8/31
  */
+//@Alias("Employee")
 public interface EmployeeMapper {
     List<Employee> getEmployeelist();
 

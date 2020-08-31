@@ -7,19 +7,19 @@
 <mapper namespace="com.sixcapital.mybatis.mapper.EmployeeMapper">
 
     <!--select查询语句-->
-    <select id="getEmployeelist" resultType="com.sixcapital.mybatis.entity.Employee">
+    <select id="getEmployeelist" resultType="Employee">
        select * from employee;
    </select>
 
-    <select id="getEmployeeByEmpno" parameterType="int" resultType="com.sixcapital.mybatis.entity.Employee">
+    <select id="getEmployeeByEmpno" parameterType="int" resultType="Employee">
         select *  from employee where empno =#{empno};
     </select>
 
-    <insert id="addEmployee" parameterType="com.sixcapital.mybatis.entity.Employee">
+    <insert id="addEmployee" parameterType="Employee">
         insert  into employee values (#{empno},#{ename},#{job},#{mgr},#{hiredate},#{sal},#{deptnu});
     </insert>
 
-    <update id="updateEmployee" parameterType="com.sixcapital.mybatis.entity.Employee">
+    <update id="updateEmployee" parameterType="Employee">
         update employee set ename =#{ename}, job=#{job}  where empno=#{empno};
     </update>
 
@@ -38,7 +38,7 @@
         select *  from  employee where empno=? ;
         select *  from  employee where empno=1 or 1=1 ;
     -->
-    <select id="getEmployeeLike" resultType="com.sixcapital.mybatis.entity.Employee">
+    <select id="getEmployeeLike" resultType="Employee">
         select *  from employee where ename like #{name};
     </select>
 
