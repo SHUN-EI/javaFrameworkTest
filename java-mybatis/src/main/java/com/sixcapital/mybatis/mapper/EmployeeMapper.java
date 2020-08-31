@@ -20,4 +20,6 @@ public interface EmployeeMapper {
     int deleteEmployee(int empNo);
 
     int updateEmployee2(Map<String, Object> map);
+
+    List<Employee> getEmployeeLike(String name);
 }

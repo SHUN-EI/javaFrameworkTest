@@ -48,7 +48,7 @@ public class EmployeeMapperTest {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         //获取Mapper对象
         EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-        Employee employee = new Employee(1108, "奥巴马", "经理", 1006, new Date(), new BigDecimal(16000), 20);
+        Employee employee = new Employee(1109, "奥巴马333", "经理", 1006, new Date(), new BigDecimal(16000), 20);
         int result = mapper.addEmployee(employee);
 
         if (result > 0) {
@@ -113,6 +113,18 @@ public class EmployeeMapperTest {
 
         //提交事务
         sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void getEmployeeLikeTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+        List<Employee> employees = mapper.getEmployeeLike("%奥%");
+
+        employees.forEach(e -> System.out.println(e));
         sqlSession.close();
     }
 }

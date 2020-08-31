@@ -32,4 +32,15 @@
         update employee set  ename=#{name},job=#{job} where empno=#{id};
     </update>
 
+
+    <!--
+        SQL注入：？替换成其他sql语句
+        select *  from  employee where empno=? ;
+        select *  from  employee where empno=1 or 1=1 ;
+    -->
+    <select id="getEmployeeLike" resultType="com.sixcapital.mybatis.entity.Employee">
+        select *  from employee where ename like #{name};
+    </select>
+
+
 </mapper>
