@@ -5,14 +5,16 @@
 <!--configuration核心配置文件-->
 <configuration>
 
+    <properties resource="db.properties"/>
+
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://192.168.151.99:3306/mybatis_test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
-                <property name="username" value="root"/>
-                <property name="password" value="root"/>
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
             </dataSource>
         </environment>
     </environments>
@@ -21,4 +23,5 @@
     <mappers>
         <mapper resource="com/sixcapital/mybatis/mapper/EmployeeMapper.xml"/>
     </mappers>
+
 </configuration>
