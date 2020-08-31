@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="com.sixcapital.mybatis.mapper.EmployeeMapper">
+
+    <!--select查询语句-->
+    <select id="getEmployeelist" resultType="com.sixcapital.mybatis.entity.Employee">
+       select * from mybatis_test.employee
+   </select>
+
+</mapper>
