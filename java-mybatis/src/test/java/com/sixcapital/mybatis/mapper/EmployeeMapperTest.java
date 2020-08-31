@@ -7,7 +7,9 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mo on 2020/8/31
@@ -85,6 +87,28 @@ public class EmployeeMapperTest {
         int result = mapper.deleteEmployee(1108);
         if (result > 0) {
             System.out.println("删除员工操作成功");
+        }
+
+        //提交事务
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void updateEmployee2Test() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", 1108);
+        map.put("name", "奥巴马222");
+        map.put("job", "工程师");
+
+        int result = mapper.updateEmployee2(map);
+        if (result > 0) {
+            System.out.println("更新员工操作成功");
         }
 
         //提交事务

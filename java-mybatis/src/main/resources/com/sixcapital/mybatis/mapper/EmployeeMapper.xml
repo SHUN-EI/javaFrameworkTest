@@ -8,23 +8,28 @@
 
     <!--select查询语句-->
     <select id="getEmployeelist" resultType="com.sixcapital.mybatis.entity.Employee">
-       select * from mybatis_test.employee;
+       select * from employee;
    </select>
 
     <select id="getEmployeeByEmpno" parameterType="int" resultType="com.sixcapital.mybatis.entity.Employee">
-        select *  from mybatis_test.employee where empno =#{empno};
+        select *  from employee where empno =#{empno};
     </select>
 
     <insert id="addEmployee" parameterType="com.sixcapital.mybatis.entity.Employee">
-        insert  into mybatis_test.employee values (#{empno},#{ename},#{job},#{mgr},#{hiredate},#{sal},#{deptnu});
+        insert  into employee values (#{empno},#{ename},#{job},#{mgr},#{hiredate},#{sal},#{deptnu});
     </insert>
 
     <update id="updateEmployee" parameterType="com.sixcapital.mybatis.entity.Employee">
-        update mybatis_test.employee set ename =#{ename}, job=#{job}  where empno=#{empno};
+        update employee set ename =#{ename}, job=#{job}  where empno=#{empno};
     </update>
 
     <delete id="deleteEmployee" parameterType="int">
-        delete from mybatis_test.employee where empno=#{empno};
+        delete from employee where empno=#{empno};
     </delete>
+
+    <!--对象中的属性，可以直接取出来    传递map的key-->
+    <update id="updateEmployee2" parameterType="map">
+        update employee set  ename=#{name},job=#{job} where empno=#{id};
+    </update>
 
 </mapper>
