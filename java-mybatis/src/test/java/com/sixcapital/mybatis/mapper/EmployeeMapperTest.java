@@ -3,6 +3,7 @@ package com.sixcapital.mybatis.mapper;
 import com.sixcapital.mybatis.entity.Employee;
 import com.sixcapital.mybatis.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -15,6 +16,8 @@ import java.util.Map;
  * Created by mo on 2020/8/31
  */
 public class EmployeeMapperTest {
+
+    static Logger logger = Logger.getLogger(EmployeeMapperTest.class);
 
     @Test
     public void getEmployeelistTest() {
@@ -126,5 +129,12 @@ public class EmployeeMapperTest {
 
         employees.forEach(e -> System.out.println(e));
         sqlSession.close();
+    }
+
+    @Test
+    public void log4jTest() {
+        logger.info("info:进入了log4jTest");
+        logger.debug("debug:进入了log4jTest");
+        logger.error("error:进入了log4jTest");
     }
 }

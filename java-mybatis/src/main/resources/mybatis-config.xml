@@ -10,7 +10,11 @@
 <!--    <typeAliases>-->
 <!--        <typeAlias type="com.sixcapital.mybatis.entity.Employee" alias="Employee"/>-->
 <!--    </typeAliases>-->
-    
+
+<!--    <settings>-->
+<!--        <setting name="logImpl" value="LOG4J"/>-->
+<!--    </settings>-->
+
     <typeAliases>
         <package name="com.sixcapital.mybatis.entity"/>
     </typeAliases>
@@ -31,7 +35,7 @@
     <mappers>
 <!--        <mapper resource="com/sixcapital/mybatis/mapper/EmployeeMapper.xml"/>-->
 <!--        <mapper resource="com.sixcapital.mybatis.mapper.EmployeeMapper"/>-->
-        <mapper resource="com.sixcapital.mybatis.mapper"/>
+        <package name="com.sixcapital.mybatis.mapper"/>
     </mappers>
 
 </configuration>
