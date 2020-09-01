@@ -29,7 +29,9 @@
 
     <!--每一个Mapper.xml都需要在mybatis核心配置文件中注册 -->
     <mappers>
-        <mapper resource="com/sixcapital/mybatis/mapper/EmployeeMapper.xml"/>
+<!--        <mapper resource="com/sixcapital/mybatis/mapper/EmployeeMapper.xml"/>-->
+<!--        <mapper resource="com.sixcapital.mybatis.mapper.EmployeeMapper"/>-->
+        <mapper resource="com.sixcapital.mybatis.mapper"/>
     </mappers>
 
 </configuration>
