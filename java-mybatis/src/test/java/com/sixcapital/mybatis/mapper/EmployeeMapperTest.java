@@ -132,6 +132,22 @@ public class EmployeeMapperTest {
     }
 
     @Test
+    public void getEmployeeByLimitTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("startIndex", 0);
+        map.put("pageSize", 2);
+
+        List<Employee> employees = mapper.getEmployeeByLimit(map);
+        employees.forEach(e -> System.out.println(e));
+        sqlSession.close();
+    }
+
+    @Test
     public void log4jTest() {
         logger.info("info:进入了log4jTest");
         logger.debug("debug:进入了log4jTest");

@@ -24,4 +24,6 @@ public interface EmployeeMapper {
     int updateEmployee2(Map<String, Object> map);
 
     List<Employee> getEmployeeLike(String name);
+
+    List<Employee> getEmployeeByLimit(Map<String, Integer> map);
 }

@@ -42,5 +42,9 @@
         select *  from employee where ename like #{name};
     </select>
 
+    <select id="getEmployeeByLimit" parameterType="map" resultType="Employee">
+        select *  from employee limit #{startIndex},#{pageSize};
+    </select>
+
 
 </mapper>
