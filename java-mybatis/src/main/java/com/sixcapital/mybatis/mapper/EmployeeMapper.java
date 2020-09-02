@@ -28,4 +28,9 @@ public interface EmployeeMapper {
     List<Employee> getEmployeeByLimit(Map<String, Integer> map);
 
     List<Employee> getEmployeeByRowBoundsRowBounds();
+
+    List<Employee> getEmployeeDetail();
+
+    List<Employee> getEmployeeDetailWithJoin();
+
 }

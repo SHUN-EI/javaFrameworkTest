@@ -22,6 +22,8 @@ public class Employee {
     private BigDecimal sal;
     //部门编号
     private int deptnu;
+    //所属部门
+    private Department department;
 
     public Employee() {
     }
@@ -34,6 +36,17 @@ public class Employee {
         this.hiredate = hiredate;
         this.sal = sal;
         this.deptnu = deptnu;
+    }
+
+    public Employee(int empno, String ename, String job, int mgr, Date hiredate, BigDecimal sal, int deptnu, Department Department) {
+        this.empno = empno;
+        this.ename = ename;
+        this.job = job;
+        this.mgr = mgr;
+        this.hiredate = hiredate;
+        this.sal = sal;
+        this.deptnu = deptnu;
+        this.department = department;
     }
 
     public int getEmpno() {
@@ -92,6 +105,14 @@ public class Employee {
         this.deptnu = deptnu;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -102,6 +123,7 @@ public class Employee {
                 ", hiredate=" + hiredate +
                 ", sal=" + sal +
                 ", deptnu=" + deptnu +
+                ", department=" + department +
                 '}';
     }
 }

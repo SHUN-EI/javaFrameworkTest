@@ -165,6 +165,33 @@ public class EmployeeMapperTest {
     }
 
     @Test
+    public void getEmployeeDetailTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        List<Employee> employees = mapper.getEmployeeDetail();
+        employees.forEach(e -> System.out.println(e));
+
+        sqlSession.close();
+    }
+
+    @Test
+    public void getEmployeeDetailWithJoinTest(){
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        List<Employee> employees = mapper.getEmployeeDetailWithJoin();
+        employees.forEach(e -> System.out.println(e));
+
+        sqlSession.close();
+    }
+
+
+    @Test
     public void log4jTest() {
         logger.info("info:进入了log4jTest");
         logger.debug("debug:进入了log4jTest");

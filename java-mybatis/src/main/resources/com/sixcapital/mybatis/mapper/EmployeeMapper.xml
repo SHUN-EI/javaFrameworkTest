@@ -50,5 +50,46 @@
         select *  from employee;
     </select>
 
+    <!-- 子查询,查出员工里面的部门详细信息
+        1.查询所有员工的信息
+        2.根据查询出来的员工的deptnu，去查出对应的部门信息-->
+    <select id="getEmployeeDetail" resultMap="EmployeeDept">
+        select * from employee;
+    </select>
+
+    <resultMap id="EmployeeDept" type="Employee">
+        <result property="empno" column="empno"/>
+        <result property="ename" column="ename"/>
+        <result property="job" column="job"/>
+        <result property="mgr" column="mgr"/>
+        <result property="hiredate" column="hiredate"/>
+        <result property="sal" column="sal"/>
+        <result property="deptnu" column="deptnu"/>
+        <association property="department" column="deptnu" javaType="Department" select="getDepartment"/>
+    </resultMap>
+
+    <select id="getDepartment" resultType="Department">
+        select * from dept where deptnu =#{deptnu};
+    </select>
+
+    <!--  连接查询  -->
+    <select id="getEmployeeDetailWithJoin" resultMap="EmployeeDept2">
+        select  * from employee e inner  join dept d on d.deptnu=e.deptnu;
+    </select>
+
+    <resultMap id="EmployeeDept2" type="Employee">
+        <result property="empno" column="empno"/>
+        <result property="ename" column="ename"/>
+        <result property="job" column="job"/>
+        <result property="mgr" column="mgr"/>
+        <result property="hiredate" column="hiredate"/>
+        <result property="sal" column="sal"/>
+        <result property="deptnu" column="deptnu"/>
+        <association property="department" javaType="Department">
+            <result property="deptnu" column="deptnu"/>
+            <result property="dname" column="dname"/>
+            <result property="addr" column="addr"/>
+        </association>
+    </resultMap>
 
 </mapper>
