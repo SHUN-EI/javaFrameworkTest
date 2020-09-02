@@ -25,4 +25,8 @@ public interface DepartmentMapper {
 
     @Delete("delete from dept where deptnu=#{deptnu}")
     int deleteDepartment(@Param("deptnu") int id);
+
+    Department getDepartmentDetail(@Param("deptnu") int id);
+
+    Department getDepartmentDetailWithJoin(@Param("deptnu") int id);
 }

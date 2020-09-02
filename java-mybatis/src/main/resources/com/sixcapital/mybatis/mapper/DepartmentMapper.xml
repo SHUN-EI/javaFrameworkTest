@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="com.sixcapital.mybatis.mapper.DepartmentMapper">
+
+    <!--按结果嵌套查询-->
+    <select id="getDepartmentDetailWithJoin" resultMap="DeptEmployee">
+        select * from dept d inner  join employee e on e.deptnu=d.deptnu where d.deptnu= #{deptnu};
+    </select>
+
+    <resultMap id="DeptEmployee" type="Department">
+        <result property="deptnu" column="deptnu"/>
+        <result property="dname" column="dname"/>
+        <result property="addr" column="addr"/>
+        <!--复杂的属性，我们需要单独处理 对象： association 集合： collection
+       javaType="" 指定属性的类型！集合中的泛型信息，我们使用ofType获取 -->
+        <collection property="employees" ofType="Employee">
+            <result property="empno" column="empno"/>
+            <result property="ename" column="ename"/>
+            <result property="job" column="job"/>
+            <result property="mgr" column="mgr"/>
+            <result property="hiredate" column="hiredate"/>
+            <result property="sal" column="sal"/>
+            <result property="deptnu" column="deptnu"/>
+        </collection>
+    </resultMap>
+
+    <!--按照查询嵌套处理-->
+    <select id="getDepartmentDetail" resultMap="DeptEmployee2">
+        select * from dept where deptnu=#{deptnu};
+    </select>
+
+    <resultMap id="DeptEmployee2" type="Department">
+        <result property="deptnu" column="deptnu"/>
+        <result property="dname" column="dname"/>
+        <result property="addr" column="addr"/>
+        <collection property="employees" javaType="ArrayList"
+                    ofType="Employee" select="getEmployeeByDeptnu" column="deptnu"></collection>
+    </resultMap>
+
+    <select id="getEmployeeByDeptnu" resultType="Employee">
+        select * from employee where deptnu=#{deptnu};
+    </select>
+
+
+</mapper>

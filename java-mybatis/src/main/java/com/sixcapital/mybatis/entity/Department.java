@@ -1,5 +1,7 @@
 package com.sixcapital.mybatis.entity;
 
+import java.util.List;
+
 /**
  * Created by mo on 2020/9/2
  */
@@ -11,6 +13,8 @@ public class Department {
     private String dname;
     //部门地址
     private String addr;
+    //员工
+    private List<Employee> employees;
 
     public Department() {
     }
@@ -19,6 +23,21 @@ public class Department {
         this.deptnu = deptnu;
         this.dname = dname;
         this.addr = addr;
+    }
+
+    public Department(int deptnu, String dname, String addr, List<Employee> employees) {
+        this.deptnu = deptnu;
+        this.dname = dname;
+        this.addr = addr;
+        this.employees = employees;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 
     public int getDeptnu() {
@@ -51,6 +70,7 @@ public class Department {
                 "deptnu=" + deptnu +
                 ", dname='" + dname + '\'' +
                 ", addr='" + addr + '\'' +
+                ", employees=" + employees +
                 '}';
     }
 }

@@ -71,7 +71,7 @@ public class DepartmentMapperTest {
     }
 
     @Test
-    public void deleteDepartmentTest(){
+    public void deleteDepartmentTest() {
         //获取sqlSession对象
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         //获取Mapper对象
@@ -82,6 +82,30 @@ public class DepartmentMapperTest {
             System.out.println("删除部门操作成功");
         }
 
+        sqlSession.close();
+    }
+
+    @Test
+    public void getDepartmentDetailWithJoinTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        DepartmentMapper mapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        Department department = mapper.getDepartmentDetailWithJoin(20);
+        System.out.println(department);
+        sqlSession.close();
+    }
+
+    @Test
+    public void getDepartmentDetailTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        DepartmentMapper mapper = sqlSession.getMapper(DepartmentMapper.class);
+
+        Department department = mapper.getDepartmentDetail(20);
+        System.out.println(department);
         sqlSession.close();
     }
 }
