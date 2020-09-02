@@ -38,4 +38,5 @@
         <package name="com.sixcapital.mybatis.mapper"/>
     </mappers>
 
+
 </configuration>
