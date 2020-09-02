@@ -46,5 +46,9 @@
         select *  from employee limit #{startIndex},#{pageSize};
     </select>
 
+    <select id="getEmployeeByRowBounds" resultType="Employee">
+        select *  from employee;
+    </select>
+
 
 </mapper>

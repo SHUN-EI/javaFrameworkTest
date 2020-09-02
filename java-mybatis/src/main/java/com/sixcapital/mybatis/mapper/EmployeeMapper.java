@@ -26,4 +26,6 @@ public interface EmployeeMapper {
     List<Employee> getEmployeeLike(String name);
 
     List<Employee> getEmployeeByLimit(Map<String, Integer> map);
+
+    List<Employee> getEmployeeByRowBoundsRowBounds();
 }

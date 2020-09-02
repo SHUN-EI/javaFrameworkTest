@@ -2,6 +2,7 @@ package com.sixcapital.mybatis.mapper;
 
 import com.sixcapital.mybatis.entity.Employee;
 import com.sixcapital.mybatis.utils.MybatisUtils;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -143,6 +144,22 @@ public class EmployeeMapperTest {
         map.put("pageSize", 2);
 
         List<Employee> employees = mapper.getEmployeeByLimit(map);
+        employees.forEach(e -> System.out.println(e));
+        sqlSession.close();
+    }
+
+    @Test
+    public void getEmployeeByRowBoundsTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+        //RowBounds实现分页
+        RowBounds rowBounds = new RowBounds(1, 2);
+
+        List<Employee> employees = sqlSession.selectList("com.sixcapital.mybatis.mapper.EmployeeMapper.getEmployeeByRowBounds",
+                null, rowBounds);
+
         employees.forEach(e -> System.out.println(e));
         sqlSession.close();
     }
