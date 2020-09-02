@@ -33,4 +33,6 @@ public interface EmployeeMapper {
 
     List<Employee> getEmployeeDetailWithJoin();
 
+    List<Employee> getEmployeeIf(Map map);
+
 }

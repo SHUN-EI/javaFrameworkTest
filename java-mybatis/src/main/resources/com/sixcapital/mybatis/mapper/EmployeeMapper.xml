@@ -93,4 +93,14 @@
         </association>
     </resultMap>
 
+    <select id="getEmployeeIf" parameterType="map" resultType="Employee">
+        select  * from employee where 1=1
+        <if test="job !=null">
+            and job=#{job}
+        </if>
+        <if test="ename !=null">
+            and ename like #{ename}
+        </if>
+    </select>
+
 </mapper>
