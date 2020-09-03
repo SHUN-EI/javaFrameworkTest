@@ -37,8 +37,18 @@ public class EmployeeMapperTest {
         //获取Mapper对象
         EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
         Employee employee = mapper.getEmployeeByEmpno(1002);
-
         System.out.println(employee);
+
+        //手动清理缓存
+        sqlSession.clearCache();
+
+        System.out.println("=====================================");
+
+        Employee employee2 = mapper.getEmployeeByEmpno(1002);
+
+        System.out.println(employee2);
+        System.out.println("两次查询的结果");
+        System.out.println(employee == employee2);
         //关闭sqlSession
         sqlSession.close();
     }
