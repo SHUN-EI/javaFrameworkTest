@@ -94,7 +94,7 @@
     </resultMap>
 
     <select id="getEmployeeIf" parameterType="map" resultType="Employee">
-        select  * from employee where 1=1
+        select * from employee where 1=1
         <if test="job !=null">
             and job=#{job}
         </if>
@@ -112,7 +112,7 @@
                     job=#{job}
                 </when>
                 <when test="ename !=null">
-                    and  ename = #{ename}
+                    and ename = #{ename}
                 </when>
                 <otherwise>
                     and sal=#{sal}
@@ -120,5 +120,18 @@
             </choose>
         </where>
     </select>
+
+    <update id="updateEmployee3" parameterType="map">
+        update employee
+        <set>
+            <if test="job !=null">
+                job=#{job},
+            </if>
+            <if test="ename !=null">
+                ename =#{ename}
+            </if>
+        </set>
+        where empno=#{empno}
+    </update>
 
 </mapper>

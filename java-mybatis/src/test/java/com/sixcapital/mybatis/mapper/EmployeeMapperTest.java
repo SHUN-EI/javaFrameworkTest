@@ -225,6 +225,25 @@ public class EmployeeMapperTest {
         sqlSession.close();
     }
 
+    @Test
+    public void updateEmployee3Test(){
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        Map<Object, Object> map = new HashMap<>();
+        map.put("job", "经理2");
+        map.put("ename", "奥巴马338");
+        map.put("empno", 1109);
+
+        int result = mapper.updateEmployee3(map);
+        if (result>0){
+            System.out.println("更新员工操作成功");
+        }
+        sqlSession.close();
+    }
+
 
     @Test
     public void log4jTest() {
