@@ -226,7 +226,7 @@ public class EmployeeMapperTest {
     }
 
     @Test
-    public void updateEmployee3Test(){
+    public void updateEmployee3Test() {
         //获取sqlSession对象
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         //获取Mapper对象
@@ -238,9 +238,26 @@ public class EmployeeMapperTest {
         map.put("empno", 1109);
 
         int result = mapper.updateEmployee3(map);
-        if (result>0){
+        if (result > 0) {
             System.out.println("更新员工操作成功");
         }
+        sqlSession.close();
+    }
+
+    @Test
+    public void getEmployeeIf2() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        Map map = new HashMap();
+        //map.put("job", "经理");
+        map.put("ename", "%奥%");
+
+        List<Employee> employees = mapper.getEmployeeIf2(map);
+        employees.forEach(e -> System.out.println(e));
+
         sqlSession.close();
     }
 

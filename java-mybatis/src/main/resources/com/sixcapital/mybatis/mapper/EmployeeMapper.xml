@@ -134,4 +134,20 @@
         where empno=#{empno}
     </update>
 
+    <select id="getEmployeeIf2" parameterType="map" resultType="Employee">
+        select  *  from employee
+        <where>
+            <include refid="getEmployeeIfCondition"></include>
+        </where>
+    </select>
+
+    <sql id="getEmployeeIfCondition">
+        <if test="job !=null">
+            and job=#{job}
+        </if>
+        <if test="ename !=null">
+            and ename like #{ename}
+        </if>
+    </sql>
+
 </mapper>

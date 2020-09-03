@@ -37,6 +37,8 @@ public interface EmployeeMapper {
 
     List<Employee> getEmployeeIf(Map map);
 
+    List<Employee> getEmployeeIf2(Map map);
+
     List<Employee> getEmployeeChoose(Map map);
 
 }
