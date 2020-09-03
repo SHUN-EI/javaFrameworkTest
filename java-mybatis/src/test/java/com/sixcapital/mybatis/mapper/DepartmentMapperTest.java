@@ -108,4 +108,24 @@ public class DepartmentMapperTest {
         System.out.println(department);
         sqlSession.close();
     }
+
+    @Test
+    public void cacheLevel2Test() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        SqlSession sqlSession2 = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        DepartmentMapper mapper = sqlSession.getMapper(DepartmentMapper.class);
+        DepartmentMapper mapper2 = sqlSession2.getMapper(DepartmentMapper.class);
+
+        Department department = mapper.getDepartmentDetailWithJoin(20);
+        System.out.println(department);
+        sqlSession.close();
+
+        Department department2 = mapper2.getDepartmentDetailWithJoin(20);
+        System.out.println(department2);
+        System.out.println(department==department2);
+
+        sqlSession2.close();
+    }
 }

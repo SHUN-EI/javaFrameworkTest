@@ -5,6 +5,9 @@
 
 <!--namespace=绑定一个对应的Dao/Mapper接口-->
 <mapper namespace="com.sixcapital.mybatis.mapper.DepartmentMapper">
+    <!--在当前Mapper.xml中使用二级缓存-->
+    <!--    <cache/>-->
+    <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/>
 
     <!--按结果嵌套查询-->
     <select id="getDepartmentDetailWithJoin" resultMap="DeptEmployee">
