@@ -103,4 +103,22 @@
         </if>
     </select>
 
+    <!--  when条件下，只要满足一个，后面的when条件就不会再执行  -->
+    <select id="getEmployeeChoose" parameterType="map" resultType="Employee">
+        select * from employee
+        <where>
+            <choose>
+                <when test="job !=null">
+                    job=#{job}
+                </when>
+                <when test="ename !=null">
+                    and  ename = #{ename}
+                </when>
+                <otherwise>
+                    and sal=#{sal}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
 </mapper>
