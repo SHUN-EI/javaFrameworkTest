@@ -8,10 +8,7 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by mo on 2020/8/31
@@ -256,6 +253,27 @@ public class EmployeeMapperTest {
         map.put("ename", "%奥%");
 
         List<Employee> employees = mapper.getEmployeeIf2(map);
+        employees.forEach(e -> System.out.println(e));
+
+        sqlSession.close();
+    }
+
+    @Test
+    public void getEmployeeForEachTest() {
+        //获取sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        //获取Mapper对象
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        ArrayList<Integer> empnos = new ArrayList<>();
+        empnos.add(1002);
+        empnos.add(1003);
+        empnos.add(1004);
+        empnos.add(1005);
+        Map map = new HashMap();
+        map.put("empnos", empnos);
+
+        List<Employee> employees = mapper.getEmployeeForEach(map);
         employees.forEach(e -> System.out.println(e));
 
         sqlSession.close();

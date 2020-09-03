@@ -150,4 +150,13 @@
         </if>
     </sql>
 
+    <select id="getEmployeeForEach" parameterType="map" resultType="Employee">
+        select * from employee
+        <where>
+            <foreach collection="empnos" item="empno" open="(" close=")" separator="or">
+                empno=#{empno}
+            </foreach>
+        </where>
+    </select>
+
 </mapper>

@@ -41,4 +41,6 @@ public interface EmployeeMapper {
 
     List<Employee> getEmployeeChoose(Map map);
 
+    List<Employee> getEmployeeForEach(Map map);
+
 }
