@@ -6,6 +6,7 @@
 	<modules>
 		<module>java-juc-concurrent</module>
         <module>java-mybatis</module>
+        <module>java-mybatis-plus</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
