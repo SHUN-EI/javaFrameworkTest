@@ -6,6 +6,9 @@ spring:
     password: root
     url: jdbc:mysql://192.168.151.99:3306/mybatis_test?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #mysql8.0的配置为
 #  spring:
