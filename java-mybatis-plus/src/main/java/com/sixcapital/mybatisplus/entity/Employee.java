@@ -1,16 +1,21 @@
 package com.sixcapital.mybatisplus.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import org.apache.ibatis.javassist.bytecode.SignatureAttribute;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * Created by mo on 2020/8/31
  */
-public class Employee {
+public class Employee implements Serializable {
 
     //雇员编号
+    @TableId(value = "empno", type = IdType.AUTO)
     private int empno;
     //雇员姓名
     private String ename;
