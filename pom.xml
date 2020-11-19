@@ -7,6 +7,7 @@
 		<module>java-juc-concurrent</module>
         <module>java-mybatis</module>
         <module>java-mybatis-plus</module>
+        <module>java-design-pattern</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

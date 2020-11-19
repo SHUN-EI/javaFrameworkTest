@@ -1,8 +1,11 @@
 package com.sixcapital.mybatisplus.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.javassist.bytecode.SignatureAttribute;
 
 import java.io.Serializable;
@@ -12,10 +15,11 @@ import java.util.Date;
 /**
  * Created by mo on 2020/8/31
  */
+@AllArgsConstructor
 public class Employee implements Serializable {
 
     //雇员编号
-    @TableId(value = "empno", type = IdType.AUTO)
+    @TableId(value = "empno", type = IdType.INPUT)
     private int empno;
     //雇员姓名
     private String ename;
@@ -32,6 +36,10 @@ public class Employee implements Serializable {
     //所属部门
     @TableField(exist = false)
     private Department department;
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 
     public Employee() {
     }
@@ -121,6 +129,22 @@ public class Employee implements Serializable {
         this.department = department;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -132,6 +156,8 @@ public class Employee implements Serializable {
                 ", sal=" + sal +
                 ", deptnu=" + deptnu +
                 ", department=" + department +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }

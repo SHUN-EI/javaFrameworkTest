@@ -3,8 +3,10 @@ package com.sixcapital.mybatisplus.mapper;
 import com.sixcapital.mybatisplus.entity.Employee;
 import lombok.var;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -37,7 +39,7 @@ public class EmployeeMapperTest {
     public void addEmployeeTest() {
 
         Employee employee = new Employee();
-        //employee.setEmpno(1111);
+        employee.setEmpno(1123);
         employee.setEname("奥巴马667");
         employee.setJob("经理");
         employee.setHiredate(new Date());
@@ -55,8 +57,8 @@ public class EmployeeMapperTest {
     @Test
     public void updateEmployeeTest() {
         Employee employee = new Employee();
-        employee.setEmpno(1110);
-        employee.setEname("奥巴马667");
+        employee.setEmpno(1121);
+        employee.setEname("奥巴马638");
 
         int result = employeeMapper.updateById(employee);
         if (result > 0) {
