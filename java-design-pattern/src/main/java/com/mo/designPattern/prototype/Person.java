@@ -1,12 +1,13 @@
 package com.mo.designPattern.prototype;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mo on 2020/11/20
  */
-public class Person implements Cloneable {
+public class Person implements Cloneable, Serializable {
 
     private String name;
 
@@ -45,5 +46,31 @@ public class Person implements Cloneable {
     @Override
     protected Person clone() throws CloneNotSupportedException {
         return (Person) super.clone();
+    }
+
+
+    /**
+     * 深拷贝
+     *
+     * @return
+     */
+    public Object deepClone() {
+        try {
+            //字节输出流、序列化
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(this);
+
+            //字节输入流、反序列化
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            Person obj = (Person) ois.readObject();
+
+            //序列化和反序列化之后，内存地址是会变更的
+            return obj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
