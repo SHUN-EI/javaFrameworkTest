@@ -1,4 +1,4 @@
-package com.mo.designPattern.adapter;
+package com.mo.designPattern.adapter.api;
 
 /**
  * Created by mo on 2020/11/21
