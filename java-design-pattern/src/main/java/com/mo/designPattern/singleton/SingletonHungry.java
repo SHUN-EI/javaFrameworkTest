@@ -1,4 +1,4 @@
-package com.mo.designPattern.signleton;
+package com.mo.designPattern.singleton;
 
 /**
  * Created by mo on 2020/11/19
@@ -8,14 +8,14 @@ package com.mo.designPattern.signleton;
  * 私有化构造函数
  * 提供获取单例的⽅法
  */
-public class SignletonHungry {
+public class SingletonHungry {
 
-    private static SignletonHungry instance = new SignletonHungry();
+    private static SingletonHungry instance = new SingletonHungry();
 
     /**
      * 构造函数私有化
      */
-    private SignletonHungry() {
+    private SingletonHungry() {
     }
 
     /**
@@ -25,11 +25,11 @@ public class SignletonHungry {
         System.out.println("SignletonLazy对象方法调用成功");
     }
 
-    public static SignletonHungry getInstance() {
+    public static SingletonHungry getInstance() {
         return instance;
     }
 
     public static void main(String[] args) {
-        SignletonHungry.getInstance().process();
+        SingletonHungry.getInstance().process();
     }
 }

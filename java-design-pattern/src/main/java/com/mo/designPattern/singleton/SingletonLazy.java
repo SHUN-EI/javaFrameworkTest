@@ -1,4 +1,4 @@
-package com.mo.designPattern.signleton;
+package com.mo.designPattern.singleton;
 
 /**
  * Created by mo on 2020/11/19
@@ -8,14 +8,14 @@ package com.mo.designPattern.signleton;
  * 私有化构造函数
  * 提供获取单例的⽅法
  */
-public class SignletonLazy {
+public class SingletonLazy {
 
     //private static SignletonLazy instance;
 
     /**
      * 构造函数私有化
      */
-    private SignletonLazy() {
+    private SingletonLazy() {
     }
 
     /**
@@ -31,9 +31,9 @@ public class SignletonLazy {
      * <p>
      * 线程不安全，多线程下存在安全问题
      */
-    public static SignletonLazy getInstance1() {
+    public static SingletonLazy getInstance1() {
         if (instance == null) {
-            instance = new SignletonLazy();
+            instance = new SingletonLazy();
         }
         return instance;
     }
@@ -47,19 +47,19 @@ public class SignletonLazy {
      *
      * @return
      */
-    public static synchronized SignletonLazy getInstance2() {
+    public static synchronized SingletonLazy getInstance2() {
         if (instance == null) {
-            instance = new SignletonLazy();
+            instance = new SingletonLazy();
         }
         return instance;
     }
 
     //锁粒度虽然够小，但是没法完全保证线程安全问题
-    public static SignletonLazy getInstance3_1() {
+    public static SingletonLazy getInstance3_1() {
         if (instance == null) {
             //若A、B两个线程都通过非空判断，即到这里若A创建了对象实例，释放锁之后，B拿到锁后也会进入创建对象
-            synchronized (SignletonLazy.class) {
-                instance = new SignletonLazy();
+            synchronized (SingletonLazy.class) {
+                instance = new SingletonLazy();
             }
         }
         return instance;
@@ -84,11 +84,11 @@ public class SignletonLazy {
      *
      * @return
      */
-    public static SignletonLazy getInstance3() {
+    public static SingletonLazy getInstance3() {
         if (instance == null) {
-            synchronized (SignletonLazy.class) {
+            synchronized (SingletonLazy.class) {
                 if (instance == null) {
-                    instance = new SignletonLazy();
+                    instance = new SingletonLazy();
                 }
             }
         }
@@ -113,13 +113,13 @@ public class SignletonLazy {
      * 指令重排序是JVM对语句执行的优化，只要语句间没有依赖，那JVM就有权对语句进行优化
      * 禁止了指令重排
      */
-    public static volatile SignletonLazy instance;
+    public static volatile SingletonLazy instance;
 
-    public static SignletonLazy getInstance() {
+    public static SingletonLazy getInstance() {
         if (instance == null) {
-            synchronized (SignletonLazy.class) {
+            synchronized (SingletonLazy.class) {
                 if (instance == null) {
-                    instance = new SignletonLazy();
+                    instance = new SingletonLazy();
                 }
             }
         }
@@ -127,7 +127,7 @@ public class SignletonLazy {
     }
 
     public static void main(String[] args) {
-        SignletonLazy.getInstance().process();
+        SingletonLazy.getInstance().process();
     }
 
 }
