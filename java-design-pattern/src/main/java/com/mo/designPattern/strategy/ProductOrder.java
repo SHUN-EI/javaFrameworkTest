@@ -2,6 +2,7 @@ package com.mo.designPattern.strategy;
 
 /**
  * Created by mo on 2020/11/23
+ * 订单对象
  */
 public class ProductOrder {
 
