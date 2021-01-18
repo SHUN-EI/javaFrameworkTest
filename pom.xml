@@ -8,7 +8,8 @@
         <module>java-mybatis</module>
         <module>java-mybatis-plus</module>
         <module>java-design-pattern</module>
-    </modules>
+		<module>java-netty</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
