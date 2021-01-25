@@ -31,7 +31,7 @@ public class NettyClient {
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             //pipeline.addLast(new StringEncoder());
                             //pipeline.addLast(new StringDecoder());
-                            pipeline.addLast(new ObjectEncoder());
+                            //pipeline.addLast(new ObjectEncoder());
                             pipeline.addLast(new NettyClientHandler());
                         }
                     });

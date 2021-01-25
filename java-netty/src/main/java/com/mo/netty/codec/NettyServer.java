@@ -34,7 +34,7 @@ public class NettyServer {
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             //pipeline.addLast(new StringDecoder());
                             //pipeline.addLast(new StringEncoder());
-                            pipeline.addLast(new ObjectDecoder(10240, ClassResolvers.cacheDisabled(null)));
+                            //pipeline.addLast(new ObjectDecoder(10240, ClassResolvers.cacheDisabled(null)));
                             pipeline.addLast(new NettyServerHandler());
                         }
                     });
