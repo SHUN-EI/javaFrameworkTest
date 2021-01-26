@@ -52,6 +52,7 @@ public class ChatClient {
             }
 
 
+//            //循环发送数据，容易导致数据粘包拆包问题
 //            for (int i = 0; i < 20; i++) {
 //                channel.writeAndFlush("hello，everyone !");
 //            }
