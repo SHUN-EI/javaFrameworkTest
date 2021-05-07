@@ -9,6 +9,7 @@
         <module>java-mybatis-plus</module>
         <module>java-design-pattern</module>
 		<module>java-netty</module>
+		<module>java-log</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -16,7 +17,7 @@
 		<version>2.3.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.sixcapital</groupId>
+	<groupId>com.mo</groupId>
 	<artifactId>javaFrameworkTest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>javaFrameworkTest</name>
