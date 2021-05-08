@@ -12,7 +12,7 @@ public class LogConfigTest {
 
     @Test
     public void logConfigTest() {
-        File file = new File(LogConfig.configFile);
+        File file = new File(LogConfig.configFileName);
         String result = LogConfig.readProperties(file, "value1");
         System.out.println("读取到配置文件为" + result);
     }
