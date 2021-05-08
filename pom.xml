@@ -9,7 +9,6 @@
         <module>java-mybatis-plus</module>
         <module>java-design-pattern</module>
 		<module>java-netty</module>
-		<module>java-log</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
