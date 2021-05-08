@@ -17,13 +17,13 @@ import java.util.Properties;
  */
 public class LogConfig {
 
-    public static final String configFileName = "log.properties";
+    public static final String logConfigFileName = "log.properties";
 
 
     /**
      * 配置文件缓存
      */
-    private static Map<String, Properties> propsMap = new HashMap<String, Properties>();
+    private static Map<String, Object[]> propsMap = new HashMap<String, Object[]>();
 
     /**
      * 获取配置
@@ -32,12 +32,12 @@ public class LogConfig {
      * @return
      */
     public static String getConfig(String key) {
-        File file = new File(configFileName);
+        File file = new File(logConfigFileName);
 
         //当前目录
         if (!file.exists()) {
             //从类路径下获取
-            URL url = LogConfig.class.getClassLoader().getResource(configFileName);
+            URL url = LogConfig.class.getClassLoader().getResource(logConfigFileName);
 
             if (null == url) return null;
 
@@ -69,25 +69,49 @@ public class LogConfig {
 
         String result = "";
         //先从缓存里面读取配置文件
-        Properties prop = propsMap.get(configFileName);
-        if (null == prop) {
+        Object[] objects = propsMap.get(logConfigFileName);
+        if (null == objects) {
             System.out.println("缓存里面没有找到...");
-            try (FileInputStream fis = new FileInputStream(file);
-                 BufferedInputStream bis = new BufferedInputStream(fis);) {
-
-                Properties properties = new Properties();
-                properties.load(bis);
-                //配置文件加入缓存
-                propsMap.put(configFileName, properties);
-                result = properties.getProperty(key);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            setCache(file);
         } else {
             System.out.println("进入缓存里面找....");
-            result = prop.getProperty(key);
+            long lastModified = Long.valueOf(objects[0] + "");
+            long fileLastModified = file.lastModified();
+            //若缓存中的修改时间比当前文件的修改时间小，则更新缓存
+            if (lastModified < fileLastModified) {
+                setCache(file);
+            }
         }
+
+        objects = propsMap.get(logConfigFileName);
+        Properties properties = (Properties) objects[1];
+        result = properties.getProperty(key);
+
         return result;
+
+    }
+
+    /**
+     * 更新缓存
+     *
+     * @param file
+     */
+    private static void setCache(File file) {
+
+        try (FileInputStream fis = new FileInputStream(file);
+             BufferedInputStream bis = new BufferedInputStream(fis)
+        ) {
+            Properties properties = new Properties();
+            properties.load(bis);
+            Object[] cacheObjects = new Object[2];
+            cacheObjects[0] = file.lastModified();
+            cacheObjects[1] = properties;
+
+            //配置文件加入缓存
+            propsMap.put(logConfigFileName, cacheObjects);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
