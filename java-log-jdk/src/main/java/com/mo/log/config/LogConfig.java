@@ -71,6 +71,19 @@ public class LogConfig {
     }
 
     /**
+     * 获取配置,传入默认值-long类型
+     *
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    public static Long getConfigByLong(String key, Long defaultValue) {
+        String value = getConfig(key);
+        return value == null || "".equals(value.trim()) ? defaultValue : Long.valueOf(value);
+
+    }
+
+    /**
      * 读取配置文件的配置项
      *
      * @param file

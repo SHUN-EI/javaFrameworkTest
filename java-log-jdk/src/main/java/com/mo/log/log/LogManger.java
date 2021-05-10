@@ -1,0 +1,39 @@
+package com.mo.log.log;
+
+import com.mo.log.config.LogConfig;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * Created by mo on 2021/5/11
+ * 日志管理类
+ */
+public class LogManger {
+
+    /**
+     * 文件列表
+     */
+    private Map<String, LogItem> fileList = new ConcurrentHashMap<>();
+
+    /**
+     * 写入日志的时间间隔
+     */
+    public static long INTER_TIME = LogConfig.getConfigByLong("INTER_TIME", 1000l);
+
+    /**
+     * 单个文件的大小，默认为10m
+     */
+    public static long SINGLE_FILE_SIZE = LogConfig.getConfigByLong("SINGLE_FILE_SIZE", 10 * 1024 * 1024l);
+
+    /**
+     * 缓存大小,默认为1m
+     */
+    public static long CACHE_SIZE = LogConfig.getConfigByLong("CACHE_SIZE", 1024 * 1024l);
+
+    /**
+     * 是否运行多线程
+     */
+    public static boolean isRun = true;
+
+}
