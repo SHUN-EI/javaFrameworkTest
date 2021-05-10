@@ -38,4 +38,34 @@ public class LogTest {
             currentBuffer = logItem.getStringBufferA();
         }
     }
+
+    //写入时间
+    long interTime = 100000l;
+
+    long flushCacheSize = 10 * 1024 * 1024l;
+
+    @Test
+    public void writeBufferTest() {
+        LogItem logItem = new LogItem();
+        long currentTime = System.currentTimeMillis();
+        long nextWriteTime = currentTime + interTime;
+        logItem.setNextWriteTime(nextWriteTime);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        long currentCache = logItem.getCurrCacheSize() + 100 * 1024 * 1024;
+        logItem.setCurrCacheSize(currentCache);
+
+        currentTime = System.currentTimeMillis();
+        long writeTime = logItem.getNextWriteTime();
+        currentCache = logItem.getCurrCacheSize();
+
+        if (currentTime >= writeTime || currentCache >= flushCacheSize) {
+            System.out.println("执行刷盘");
+        }
+    }
 }
