@@ -1,6 +1,7 @@
 package com.mo.log.log;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,12 +17,12 @@ public class LogItem {
     /**
      * 缓存A
      */
-    public StringBuffer stringBufferA;
+    public List<StringBuffer> stringBufferA = new ArrayList<>();
 
     /**
      * 缓存B
      */
-    public StringBuffer stringBufferB;
+    public List<StringBuffer> stringBufferB = new ArrayList<>();
 
     public char getCurrLogBuff() {
         return currLogBuff;
@@ -31,19 +32,19 @@ public class LogItem {
         this.currLogBuff = currLogBuff;
     }
 
-    public StringBuffer getStringBufferA() {
+    public List<StringBuffer> getStringBufferA() {
         return stringBufferA;
     }
 
-    public void setStringBufferA(StringBuffer stringBufferA) {
+    public void setStringBufferA(List<StringBuffer> stringBufferA) {
         this.stringBufferA = stringBufferA;
     }
 
-    public StringBuffer getStringBufferB() {
+    public List<StringBuffer> getStringBufferB() {
         return stringBufferB;
     }
 
-    public void setStringBufferB(StringBuffer stringBufferB) {
+    public void setStringBufferB(List<StringBuffer> stringBufferB) {
         this.stringBufferB = stringBufferB;
     }
 }
