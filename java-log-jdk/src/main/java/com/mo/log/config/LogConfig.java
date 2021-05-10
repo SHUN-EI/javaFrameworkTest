@@ -23,7 +23,7 @@ public class LogConfig {
     /**
      * 配置文件缓存
      */
-    private static Map<String, Object[]> propsMap = new HashMap<String, Object[]>();
+    private static Map<String, Object[]> propsMap = new HashMap<>();
 
     /**
      * 获取配置
@@ -56,6 +56,17 @@ public class LogConfig {
 
         String result = readProperties(file, key);
         return result;
+    }
+
+    /**
+     * 获取配置,传入默认值
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    public static String getConfigWithDefault(String key, String defaultValue) {
+        String value = getConfig(key);
+        return value == null ? defaultValue : value;
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.mo.log.test;
 
 import com.mo.log.config.LogConfig;
+import com.mo.log.constant.LogConstant;
 import org.junit.Test;
 
 import java.io.File;
@@ -11,8 +12,16 @@ import java.io.File;
 public class LogConfigTest {
 
     @Test
+    public void logConstantTest() {
+        System.out.println(LogConstant.CFG_LOG_LEVEL);
+        System.out.println(LogConstant.CONSOLE_PRINT);
+        System.out.println(LogConstant.CFG_CHARSET_NAME);
+        System.out.println(LogConstant.CFG_LOG_PATH);
+    }
+
+    @Test
     public void logConfigTest() {
-        File file = new File(LogConfig.configFileName);
+        File file = new File(LogConfig.logConfigFileName);
         String result = LogConfig.readProperties(file, "value1");
         System.out.println("读取到配置文件为" + result);
     }
