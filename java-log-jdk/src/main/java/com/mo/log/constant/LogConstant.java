@@ -2,6 +2,9 @@ package com.mo.log.constant;
 
 import com.mo.log.config.LogConfig;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by mo on 2021/5/8
  */
@@ -45,4 +48,16 @@ public class LogConstant {
      * 日志文件路径
      */
     public static String CFG_LOG_PATH = LogConfig.getConfigWithDefault("CFG_LOG_PATH", "");
+
+
+    public static Map<String, String> LEVE_MAP = new HashMap<String, String>() {
+        {
+            put("0", "DEBUG");
+            put("1", "INFO");
+            put("2", "WARN");
+            put("3", "ERROR");
+            put("4", "FATAL");
+
+        }
+    };
 }

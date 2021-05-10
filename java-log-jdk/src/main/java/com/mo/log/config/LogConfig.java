@@ -60,6 +60,7 @@ public class LogConfig {
 
     /**
      * 获取配置,传入默认值
+     *
      * @param key
      * @param defaultValue
      * @return
@@ -78,7 +79,7 @@ public class LogConfig {
      */
     public static String readProperties(File file, String key) {
 
-        String result = "";
+        String result = null;
         //先从缓存里面读取配置文件
         Object[] objects = propsMap.get(logConfigFileName);
         if (null == objects) {
