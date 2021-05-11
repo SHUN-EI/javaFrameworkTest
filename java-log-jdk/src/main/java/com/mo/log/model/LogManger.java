@@ -8,10 +8,10 @@ import com.mo.log.utils.TimeUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by mo on 2021/5/11
@@ -135,6 +135,35 @@ public class LogManger extends Thread {
             }
         }
     }
+
+    /**
+     * 日志文件刷盘
+     *
+     * @param isFlush
+     */
+    private void flush(boolean isFlush) {
+        long currentTime = System.currentTimeMillis();
+
+        if (fileList.size() > 0) {
+            fileList.values().forEach(logItem -> {
+                List<StringBuffer> buffers = null;
+                if (isFlush || currentTime > logItem.nextWriteTime || logItem.getCurrCacheSize() > CACHE_SIZE) {
+                    char currLogBuff = logItem.getCurrLogBuff();
+                    if ('A' == currLogBuff) {
+                        buffers = logItem.stringBufferA;
+                        logItem.currLogBuff = 'B';
+                    } else {
+                        buffers = logItem.stringBufferB;
+                        logItem.currLogBuff = 'A';
+                    }
+                    //写入文件
+                    createLogFile(logItem);
+                    writeToFile(logItem.fullLogFileName, buffers);
+                }
+            });
+        }
+    }
+
 
     /**
      * 缓存的数据写入文件
