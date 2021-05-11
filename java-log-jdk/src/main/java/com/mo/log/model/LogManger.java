@@ -2,6 +2,10 @@ package com.mo.log.model;
 
 import com.mo.log.config.LogConfig;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -71,6 +75,40 @@ public class LogManger extends Thread {
         }
 
         return logManger;
+    }
+
+    /**
+     * 缓存的数据写入文件
+     *
+     * @return
+     */
+    public static int writeToFile(String filePath, List<StringBuffer> buffers) {
+        int size = 0;
+
+        File file = new File(filePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try (FileOutputStream outputStream = new FileOutputStream(filePath, true)) {
+
+            for (int i = 0; i < buffers.size(); i++) {
+                StringBuffer buffer = buffers.get(i);
+                byte[] bytes = LogConfig.getByteByString(buffer.toString());
+                size += bytes.length;
+                outputStream.write(bytes);
+                //清理缓存
+                buffers.clear();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return size;
     }
 
     /**
