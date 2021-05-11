@@ -237,4 +237,15 @@ public class LogManger extends Thread {
             logItem.getStringBufferB().add(messageLog);
         }
     }
+
+    /**
+     * 优雅关闭日志
+     */
+    public void close() {
+        isRun = false;
+
+        //强制刷盘,把在缓存中的数据更新到文件中
+        flush(true);
+    }
+
 }
