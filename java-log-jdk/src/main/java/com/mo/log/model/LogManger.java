@@ -46,8 +46,17 @@ public class LogManger extends Thread {
 
     @Override
     public void run() {
+        int i = 0;
+
         while (isRun) {
-            System.out.println("测试");
+            //关闭强制刷盘
+            flush(false);
+            i++;
+            //每执行100次之后就去看一下日志级别是否发生改变
+            if (i % 100 == 0) {
+                LogConstant.CFG_LOG_LEVEL = LogConfig.getConfigWithDefault("CFG_LOG_LEVEL", "INFO");
+                i = 0;
+            }
         }
     }
 
