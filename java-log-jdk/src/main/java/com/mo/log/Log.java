@@ -28,6 +28,18 @@ public class Log {
      * 构造函数私有化
      */
     private Log() {
+
+        /**
+         * 模板方法模式：也称钩子函数或回调方法
+         * Java提供注册钩子线程，在JVM进程关闭之前，会自动执行这个钩子线程。
+         *
+         * 运用这个技巧，可以再JVM关闭之前，释放一些系统资源
+         */
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> close()));
+    }
+
+    private static void close() {
+        logManger.close();
     }
 
     /**
