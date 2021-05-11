@@ -44,21 +44,12 @@ public class LogManger extends Thread {
      */
     public static boolean isRun = true;
 
-    @Override
-    public void run() {
-        int i = 0;
+    /**
+     * volatile,保证线程的可见性，禁止指令重排
+     */
+    private volatile static LogManger logManger = null;
 
-        while (isRun) {
-            //关闭强制刷盘
-            flush(false);
-            i++;
-            //每执行100次之后就去看一下日志级别是否发生改变
-            if (i % 100 == 0) {
-                LogConstant.CFG_LOG_LEVEL = LogConfig.getConfigWithDefault("CFG_LOG_LEVEL", "INFO");
-                i = 0;
-            }
-        }
-    }
+    private static Object lockObject = new Object();//单例锁
 
     /**
      * 构造函数私有化
@@ -69,18 +60,13 @@ public class LogManger extends Thread {
     }
 
     /**
-     * volatile,保证线程的可见性，禁止指令重排
-     */
-    private volatile static LogManger logManger = null;
-
-    /**
      * 单例模式获取，双重检查锁定 （Double-Checked-Locking）
      *
      * @return
      */
     public static LogManger getInstance() {
         if (logManger == null) {
-            synchronized (LogManger.class) {
+            synchronized (lockObject) {
                 if (logManger == null) {
                     logManger = new LogManger();
                 }
@@ -136,7 +122,7 @@ public class LogManger extends Thread {
 
             logItem.fullLogFileName = newDir + "/" + logItem.getLogFileName() + extensionName;
             logItem.lastPCDate = currentTime;
-            file = new File(logItem.getFullLogFileName());
+            file = new File(logItem.fullLogFileName);
             if (file.exists()) {
                 logItem.currLogSize = file.length();
             } else {
@@ -153,23 +139,25 @@ public class LogManger extends Thread {
     private void flush(boolean isFlush) {
         long currentTime = System.currentTimeMillis();
 
-        if (fileList.size() > 0) {
-            fileList.values().forEach(logItem -> {
-                List<StringBuffer> buffers = null;
-                if (isFlush || currentTime > logItem.nextWriteTime || logItem.getCurrCacheSize() > CACHE_SIZE) {
-                    char currLogBuff = logItem.getCurrLogBuff();
-                    if ('A' == currLogBuff) {
-                        buffers = logItem.stringBufferA;
-                        logItem.currLogBuff = 'B';
-                    } else {
-                        buffers = logItem.stringBufferB;
-                        logItem.currLogBuff = 'A';
-                    }
-                    //写入文件
-                    createLogFile(logItem);
-                    writeToFile(logItem.fullLogFileName, buffers);
+        Iterator<LogItem> iterator = fileList.values().iterator();
+        while (iterator.hasNext()) {
+            LogItem logItem = iterator.next();
+
+            //缓冲队列
+            List<StringBuffer> buffers = null;
+            if (currentTime > logItem.nextWriteTime || logItem.getCurrCacheSize() > CACHE_SIZE || isFlush) {
+                char currLogBuff = logItem.getCurrLogBuff();
+                if ('A' == currLogBuff) {
+                    buffers = logItem.stringBufferA;
+                    logItem.currLogBuff = 'B';
+                } else {
+                    buffers = logItem.stringBufferB;
+                    logItem.currLogBuff = 'A';
                 }
-            });
+                //写入文件
+                createLogFile(logItem);
+                writeToFile(logItem.fullLogFileName, buffers);
+            }
         }
     }
 
@@ -180,8 +168,6 @@ public class LogManger extends Thread {
      * @return
      */
     public static int writeToFile(String filePath, List<StringBuffer> buffers) {
-        int size = 0;
-
         File file = new File(filePath);
         if (!file.exists()) {
             try {
@@ -191,16 +177,17 @@ public class LogManger extends Thread {
             }
         }
 
-        try (FileOutputStream outputStream = new FileOutputStream(filePath, true)) {
-
+        int size = 0;
+        try (FileOutputStream out = new FileOutputStream(filePath, true)) {
             for (int i = 0; i < buffers.size(); i++) {
                 StringBuffer buffer = buffers.get(i);
                 byte[] bytes = LogConfig.getByteByString(buffer.toString());
                 size += bytes.length;
-                outputStream.write(bytes);
-                //清理缓存
-                buffers.clear();
+                out.write(bytes);
             }
+
+            //写完之后，清理缓存
+            buffers.clear();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -220,21 +207,37 @@ public class LogManger extends Thread {
         if (null == logItem) {
             synchronized (LogManger.class) {
                 if (null == logItem) {
-                    LogItem log = new LogItem();
-                    log.logFileName = fileName;
-                    log.nextWriteTime = System.currentTimeMillis() + INTER_TIME;
+                    logItem = new LogItem();
+                    logItem.logFileName = fileName;
+                    logItem.nextWriteTime = System.currentTimeMillis() + INTER_TIME;
 
                     //加入缓存
-                    fileList.put(fileName, log);
+                    fileList.put(fileName, logItem);
                 }
             }
         }
 
-        char currLogBuff = logItem.currLogBuff;
-        if (currLogBuff == 'A') {
+        //保存数据到缓存
+        if (logItem.currLogBuff == 'A') {
             logItem.getStringBufferA().add(messageLog);
         } else {
             logItem.getStringBufferB().add(messageLog);
+        }
+    }
+
+    @Override
+    public void run() {
+        int i = 0;
+
+        while (isRun) {
+            //关闭强制刷盘
+            flush(false);
+            i++;
+            //每执行100次之后就去看一下日志级别是否发生改变
+            if (i % 2 == 0) {
+                LogConstant.CFG_LOG_LEVEL = LogConfig.getConfigWithDefault("CFG_LOG_LEVEL", "INFO");
+                i = 0;
+            }
         }
     }
 
@@ -246,6 +249,15 @@ public class LogManger extends Thread {
 
         //强制刷盘,把在缓存中的数据更新到文件中
         flush(true);
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 5; i++) {
+            new Thread(() -> {
+                LogManger logManger = LogManger.getInstance();
+                System.out.println("创建的logManger对象为" + logManger);
+            }).start();
+        }
     }
 
 }

@@ -33,7 +33,7 @@ public class LogConfig {
     public static byte[] getByteByString(String values) {
         byte[] result = null;
 
-        if (null == result || "".equals(values.trim())) {
+        if (null == values || "".equals(values.trim())) {
             return new byte[0];
         }
 
@@ -139,16 +139,16 @@ public class LogConfig {
         //先从缓存里面读取配置文件
         Object[] objects = propsMap.get(logConfigFileName);
         if (null == objects) {
-            System.out.println("缓存里面没有找到...");
             setCache(file);
+            System.out.println("缓存里面没有找到...");
         } else {
-            System.out.println("进入缓存里面找....");
             long lastModified = Long.valueOf(objects[0] + "");
             long fileLastModified = file.lastModified();
             //若缓存中的修改时间比当前文件的修改时间小，则更新缓存
             if (lastModified < fileLastModified) {
                 setCache(file);
             }
+            System.out.println("进入缓存里面找....");
         }
 
         objects = propsMap.get(logConfigFileName);
@@ -166,11 +166,9 @@ public class LogConfig {
      */
     private static void setCache(File file) {
 
-        try (FileInputStream fis = new FileInputStream(file);
-             BufferedInputStream bis = new BufferedInputStream(fis)
-        ) {
+        try (FileInputStream fis = new FileInputStream(file)) {
             Properties properties = new Properties();
-            properties.load(bis);
+            properties.load(fis);
             Object[] cacheObjects = new Object[2];
             cacheObjects[0] = file.lastModified();
             cacheObjects[1] = properties;

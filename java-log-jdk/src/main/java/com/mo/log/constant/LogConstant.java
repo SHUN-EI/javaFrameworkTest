@@ -34,7 +34,7 @@ public class LogConstant {
     /**
      * 日志级别
      */
-    public static String CFG_LOG_LEVEL = LogConfig.getConfigWithDefault("CFG_LOG_LEVEL", "INFO");
+    public static String CFG_LOG_LEVEL = LogConfig.getConfigWithDefault("CFG_LOG_LEVEL", "0，1，2，3，4");
     /**
      * 是否输出到控制台
      */

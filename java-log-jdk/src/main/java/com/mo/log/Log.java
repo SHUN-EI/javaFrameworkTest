@@ -16,7 +16,7 @@ public class Log {
     /**
      * volatile,保证线程的可见性，禁止指令重排
      */
-    private volatile static Log log = null;
+    private static Log log;
 
     private static LogManger logManger;
 
@@ -38,7 +38,7 @@ public class Log {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> close()));
     }
 
-    private static void close() {
+    public static void close() {
         logManger.close();
     }
 
@@ -149,7 +149,13 @@ public class Log {
                 }
             }
         }
+    }
 
+    public static void main(String[] args) {
+        Log log = Log.getInstance();
+        log.debug("测试debug");
+        log.error("测试error");
+        log.fatal("测试fatal");
     }
 
 }
