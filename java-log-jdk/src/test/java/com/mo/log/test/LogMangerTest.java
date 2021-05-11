@@ -1,6 +1,6 @@
 package com.mo.log.test;
 
-import com.mo.log.log.LogManger;
+import com.mo.log.model.LogManger;
 import org.junit.Test;
 
 /**

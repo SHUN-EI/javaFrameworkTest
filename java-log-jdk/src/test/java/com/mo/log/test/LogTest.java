@@ -1,6 +1,6 @@
 package com.mo.log.test;
 
-import com.mo.log.log.LogItem;
+import com.mo.log.model.LogItem;
 import org.junit.Test;
 
 import java.util.List;

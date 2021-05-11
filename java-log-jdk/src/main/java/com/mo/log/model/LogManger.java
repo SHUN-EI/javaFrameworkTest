@@ -1,4 +1,4 @@
-package com.mo.log.log;
+package com.mo.log.model;
 
 import com.mo.log.config.LogConfig;
 
@@ -64,4 +64,33 @@ public class LogManger {
         return logManger;
     }
 
+    /**
+     * 添加日志到缓存
+     *
+     * @param fileName
+     * @param messageLog
+     */
+    public void addLog(String fileName, StringBuffer messageLog) {
+        LogItem logItem = fileList.get(fileName);
+
+        if (null == logItem) {
+            synchronized (LogManger.class) {
+                if (null == logItem) {
+                    LogItem log = new LogItem();
+                    log.logFileName = fileName;
+                    log.nextWriteTime = System.currentTimeMillis() + INTER_TIME;
+
+                    //加入缓存
+                    fileList.put(fileName, log);
+                }
+            }
+        }
+
+        char currLogBuff = logItem.currLogBuff;
+        if (currLogBuff == 'A') {
+            logItem.getStringBufferA().add(messageLog);
+        } else {
+            logItem.getStringBufferB().add(messageLog);
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.mo.log.log;
+package com.mo.log.model;
 
 
 import java.util.ArrayList;
