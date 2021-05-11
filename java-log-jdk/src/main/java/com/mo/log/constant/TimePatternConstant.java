@@ -11,4 +11,6 @@ public class TimePatternConstant {
 
     public static final String HHMMSS_PREFIX = "HH:mm:ss";
 
+    public static final String SERIAL_YYMMDDHHMMSS_PREFIX = "yyyyMMddHHmmss";
+
 }

@@ -1,6 +1,9 @@
 package com.mo.log.model;
 
 import com.mo.log.config.LogConfig;
+import com.mo.log.constant.LogConstant;
+import com.mo.log.constant.TimePatternConstant;
+import com.mo.log.utils.TimeUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by mo on 2021/5/11
@@ -75,6 +79,61 @@ public class LogManger extends Thread {
         }
 
         return logManger;
+    }
+
+    /**
+     * 创建日志文件
+     */
+    private void createLogFile(LogItem logItem) {
+        String extensionName = ".log";
+
+        /**
+         * 系统当前日期
+         */
+        String currentTime = TimeUtil.getTime(TimePatternConstant.SERIAL_YYMMDDHHMMSS_PREFIX);
+        //判断日志root路径是否存在，不存在则先创建
+        File rootDir = new File(LogConstant.CFG_LOG_PATH);
+        if (!rootDir.exists() || !rootDir.isDirectory()) {
+            rootDir.mkdirs();
+        }
+
+        //如果超过单个文件大小，则拆分文件
+        if (logItem.fullLogFileName != null && logItem.fullLogFileName.length() > 0
+                && logItem.currLogSize >= SINGLE_FILE_SIZE) {
+            File oldFile = new File(logItem.fullLogFileName);
+            if (oldFile.exists()) {
+                String newFileName = LogConstant.CFG_LOG_PATH + "/" + logItem.lastPCDate + "/" + logItem.logFileName + "_" +
+                        TimeUtil.getTime(TimePatternConstant.SERIAL_YYMMDDHHMMSS_PREFIX) + extensionName;
+
+                File newFile = new File(newFileName);
+                boolean flag = oldFile.renameTo(newFile);
+
+                System.out.println("日志已自动备份为 " + newFile.getName() + (flag ? "Success!" : "Failure!"));
+                //清空当前文件的大小
+                logItem.fullLogFileName = "";
+                logItem.currLogSize = 0;
+            }
+        }
+
+        //创建文件
+        if (logItem.fullLogFileName == null || logItem.fullLogFileName.length() <= 0
+                || !currentTime.equals(logItem.lastPCDate)) {
+
+            String newDir = LogConstant.CFG_LOG_PATH + "/" + currentTime;
+            File file = new File(newDir);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+
+            logItem.fullLogFileName = newDir + "/" + logItem.getLogFileName() + extensionName;
+            logItem.lastPCDate = currentTime;
+            file = new File(logItem.getFullLogFileName());
+            if (file.exists()) {
+                logItem.currLogSize = file.length();
+            } else {
+                logItem.currLogSize = 0;
+            }
+        }
     }
 
     /**

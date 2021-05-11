@@ -47,7 +47,7 @@ public class LogConstant {
     /**
      * 日志文件路径
      */
-    public static String CFG_LOG_PATH = LogConfig.getConfigWithDefault("CFG_LOG_PATH", "");
+    public static String CFG_LOG_PATH = LogConfig.getConfigWithDefault("CFG_LOG_PATH", "./log");
 
 
     public static Map<String, String> LEVE_MAP = new HashMap<String, String>() {
