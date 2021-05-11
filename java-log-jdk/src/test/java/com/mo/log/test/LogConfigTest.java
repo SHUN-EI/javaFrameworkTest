@@ -12,6 +12,12 @@ import java.io.File;
 public class LogConfigTest {
 
     @Test
+    public void logByteAndExceptionTest() {
+        System.out.println(LogConfig.getByteByString("Test"));
+        System.out.println(LogConfig.getStackTraceInfo(new Exception("测试异常")));
+    }
+
+    @Test
     public void logConstantTest() {
         System.out.println(LogConstant.CFG_LOG_LEVEL);
         System.out.println(LogConstant.CONSOLE_PRINT);

@@ -1,11 +1,10 @@
 package com.mo.log.config;
 
+import com.mo.log.constant.LogConstant;
 import com.sun.tools.corba.se.idl.StringGen;
+import com.sun.xml.internal.bind.v2.model.core.ID;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
@@ -24,6 +23,50 @@ public class LogConfig {
      * 配置文件缓存
      */
     private static Map<String, Object[]> propsMap = new HashMap<>();
+
+    /**
+     * 字符串转字节
+     *
+     * @param values
+     * @return
+     */
+    public static byte[] getByteByString(String values) {
+        byte[] result = null;
+
+        if (null == result || "".equals(values.trim())) {
+            return new byte[0];
+        }
+
+        try {
+            result = values.getBytes(LogConstant.CFG_CHARSET_NAME);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 获取异常堆栈信息
+     *
+     * @param e
+     * @return
+     */
+    public static String getStackTraceInfo(Exception e) {
+        String result = null;
+
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             PrintWriter printWriter = new PrintWriter(baos)) {
+            e.printStackTrace(printWriter);
+            result = new String(baos.toByteArray(), LogConstant.CFG_CHARSET_NAME);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
 
     /**
      * 获取配置
