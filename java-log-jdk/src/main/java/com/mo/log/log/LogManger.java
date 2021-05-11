@@ -36,4 +36,32 @@ public class LogManger {
      */
     public static boolean isRun = true;
 
+    /**
+     * 构造函数私有化
+     */
+    private LogManger() {
+    }
+
+    /**
+     * volatile,保证线程的可见性，禁止指令重排
+     */
+    private volatile static LogManger logManger = null;
+
+    /**
+     * 单例模式获取，双重检查锁定 （Double-Checked-Locking）
+     *
+     * @return
+     */
+    public static LogManger getInstance() {
+        if (logManger == null) {
+            synchronized (LogManger.class) {
+                if (logManger == null) {
+                    logManger = new LogManger();
+                }
+            }
+        }
+
+        return logManger;
+    }
+
 }
