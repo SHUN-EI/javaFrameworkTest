@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by mo on 2021/5/11
  * 日志管理类
  */
-public class LogManger {
+public class LogManger extends Thread {
 
     /**
      * 文件列表
@@ -36,10 +36,19 @@ public class LogManger {
      */
     public static boolean isRun = true;
 
+    @Override
+    public void run() {
+        while (isRun) {
+            System.out.println("测试");
+        }
+    }
+
     /**
      * 构造函数私有化
      */
     private LogManger() {
+        this.setName("LogManger");
+        this.start();
     }
 
     /**
