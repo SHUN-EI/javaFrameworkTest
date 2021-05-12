@@ -10,7 +10,8 @@
         <module>java-design-pattern</module>
 		<module>java-netty</module>
 		<module>java-log-jdk</module>
-	</modules>
+        <module>java-bigData-search</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
