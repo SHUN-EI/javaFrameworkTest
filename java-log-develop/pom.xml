@@ -15,6 +15,7 @@
         <module>log4j</module>
         <module>jul</module>
         <module>jcl</module>
+        <module>logback</module>
     </modules>
 
 
