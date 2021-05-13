@@ -11,7 +11,8 @@
 		<module>java-netty</module>
 		<module>java-log-jdk</module>
         <module>java-bigData-search</module>
-    </modules>
+        <module>java-log-develop</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
