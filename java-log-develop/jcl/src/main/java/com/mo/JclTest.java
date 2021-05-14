@@ -11,6 +11,7 @@ public class JclTest {
     private static final Log log = LogFactory.getLog(JclTest.class);
 
     public static void main(String[] args) {
-        log.info("这是JCL的日志信息");
+        log.debug("debug:这是JCL的日志信息");
+        log.info("info:这是JCL的日志信息");
     }
 }
