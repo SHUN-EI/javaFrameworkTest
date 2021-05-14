@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="3 seconds" debug="false">
+    <!-- lOGGER PATTERN 根据个⼈喜好选择匹配 -->
+    <property name="logPattern" value="logback:[ %-5level] [%date{yyyy-MM-dd HH:mm:ss.SSS}] %logger{96} [%line] [%thread]- %msg%n"></property>
+    <!-- 动态⽇志级别 -->
+    <jmxConfigurator/>
+    <!-- 控制台的标准输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logPattern}</pattern>
+        </encoder>
+    </appender>
+    <!-- 滚动⽂件 -->
+    <appender name="ROLLING_FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>./logback.log</file>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logback.log.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <!-- 最⼤保存时间 -->
+            <maxHistory>2</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logPattern}</pattern>
+        </encoder>
+    </appender>
+    <!-- DB -->
+    <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource
+                class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>com.mysql.jdbc.Driver</driverClass>
+            <url>jdbc:mysql://172.17.0.203:3306/log?useSSL=false</url>
+            <user>root</user>
+            <password>root</password>
+        </connectionSource>
+    </appender>
+
+    <!-- ASYNC_LOG -->
+    <appender name="ASYNC_LOG" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失⽇志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的⽇志 -
+       ->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>3</queueSize>
+        <appender-ref ref="STDOUT"/>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <!--<charset>UTF-8</charset>-->
+            <!--<pattern>${logPattern}</pattern>-->
+            <!--<layout class="com.itheima.logback.MySampleLayout" />-->
+            <layout class="ch.qos.logback.classic.html.HTMLLayout">
+                <pattern>%relative%thread%mdc%level%logger%msg</pattern>
+            </layout>
+            <!--<layout class="ch.qos.logback.classic.log4j.XMLLayout">-->
+            <!--<locationInfo>false</locationInfo>-->
+            <!--</layout>-->
+        </encoder>
+    </appender>
+    <!-- ⽇志的记录级别 -->
+    <!-- 在定义后引⽤APPENDER -->
+    <root level="DEBUG">
+        <!-- 控制台 -->
+        <appender-ref ref="STDOUT"/>
+        <!-- ROLLING_FILE -->
+        <appender-ref ref="ROLLING_FILE"/>
+        <!-- ASYNC_LOG -->
+        <appender-ref ref="ASYNC_LOG"/>
+    </root>
+</configuration>

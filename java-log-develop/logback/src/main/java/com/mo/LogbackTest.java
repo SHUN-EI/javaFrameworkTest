@@ -10,9 +10,12 @@ public class LogbackTest {
 
     private static final Logger logger = LoggerFactory.getLogger(LogbackTest.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         String name = "测试日志";
-        logger.info("name=" + name);
-        logger.info("name={}", name);//不需要拼接字符串
+        for (int i = 0; i < 100; i++) {
+            Thread.sleep(1000);
+            logger.debug("debug:name={}", name);//不需要拼接字符串
+            logger.info("info:name={}", name);//不需要拼接字符串
+        }
     }
 }
