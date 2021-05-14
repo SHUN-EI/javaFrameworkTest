@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 
-    <property name="logPattern" value="logback-xml:[ %-5level] [%date{yyyy-MM-dd HH:mm:ss.SSS}] %logger{96} [%line] [%thread]- %msg%n"></property>
+    <property name="logPattern" value="logback-test-xml:[ %-5level] [%date{yyyy-MM-dd HH:mm:ss.SSS}] %logger{96} [%line] [%thread]- %msg%n"></property>
     <!-- 控制台的标准输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
