@@ -18,6 +18,7 @@
         <module>logback</module>
         <module>log4j2</module>
         <module>slf4j</module>
+        <module>log-round</module>
     </modules>
 
 
