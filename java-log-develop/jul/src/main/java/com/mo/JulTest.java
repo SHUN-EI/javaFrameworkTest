@@ -15,6 +15,9 @@ public class JulTest {
     private static final Logger logger = Logger.getLogger(JulTest.class.getName());
 
     public static void main(String[] args) {
-        logger.fine("这是JUL的日志信息");
+        logger.finest("finest：这是JUL的日志信息");
+        logger.fine("fine：这是JUL的日志信息");
+        logger.info("info：这是JUL的日志信息");
+        logger.warning("warning：这是JUL的日志信息");
     }
 }
