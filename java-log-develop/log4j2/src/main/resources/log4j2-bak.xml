@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--⽇志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE >
+ALL -->
+<!--status="WARN" :⽤于设置log4j2⾃身内部⽇志的信息输出级别，默认是OFF-->
+<!--monitorInterval="30" :间隔秒数,⾃动检测配置⽂件的变更和重新配置本身-->
+<configuration status="info" monitorInterval="30">
+    <Properties>
+        <!--⾃定义⼀些常量，之后使⽤${变量名}引⽤-->
+        <Property name="pattern">log4j2:[%-5p]:%d{YYYY-MM-dd HH:mm:ss} [%t]
+            %c{1}:%L - %msg%n
+        </Property>
+    </Properties>
+    <!--appenders:定义输出内容,输出格式,输出⽅式,⽇志保存策略等,常⽤其下三种标签
+   [console,File,RollingFile]-->
+    <appenders>
+        <!--console :控制台输出的配置-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+        <!--File :同步输出⽇志到本地⽂件-->
+        <!--append="false" :根据其下⽇志策略,每次清空⽂件重新输⼊⽇志,可⽤于测试-->
+        <File name="File" fileName="./log4j2-file.log" append="false">
+            <PatternLayout pattern="${pattern}"/>
+        </File>
+        <RollingFile name="RollingFile" fileName="./log4j2-rollingfile.log"
+                     filePattern="./$${date:yyyy-MM}/log4j2-%d{yyyy-MM-dd}-
+%i.log">
+            <!--ThresholdFilter :⽇志输出过滤-->
+            <!--level="info" :⽇志级别,onMatch="ACCEPT" :级别在info之上则接
+受,onMismatch="DENY" :级别在info之下则拒绝-->
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${pattern}"/>
+            <!-- Policies :⽇志滚动策略-->
+            <Policies>
+                <!-- TimeBasedTriggeringPolicy :时间滚动策略,
+                默认0点产⽣新的⽂件,
+                interval="6" : ⾃定义⽂件滚动时间间隔,每隔6⼩时产⽣新⽂件,
+                modulate="true" : 产⽣⽂件是否以0点偏移时间,即6点,12点,18点,0点-->
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <!-- SizeBasedTriggeringPolicy :⽂件⼤⼩滚动策略-->
+                <SizeBasedTriggeringPolicy size="1 MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同⼀⽂件夹下7个⽂
+           件，这⾥设置了20 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </appenders>
+    <!--然后定义logger，只有定义了logger并引⼊的appender，appender才会⽣效-->
+    <loggers>
+        <!--过滤掉spring和mybatis的⼀些⽆⽤的DEBUG信息-->
+        <!--Logger节点⽤来单独指定⽇志的形式，name为包路径,⽐如要为org.springframework
+       包下所有⽇志指定为INFO级别等。 -->
+        <logger name="org.springframework" level="INFO"></logger>
+        <logger name="org.mybatis" level="INFO"></logger>
+        <!--AsyncLogger :异步⽇志,LOG4J有三种⽇志模式,全异步⽇志,混合模式,同步⽇志,性能
+       从⾼到底,线程越多效率越⾼,也可以避免⽇志卡死线程情况发⽣-->
+        <!--additivity="false" : additivity设置事件是否在root logger输出，为了避免重
+       复输出，可以在Logger 标签下设置additivity为”false”-->
+        <AsyncLogger name="AsyncLogger" level="trace" includeLocation="true"
+                     additivity="true">
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <logger name="Kafka" additivity="false" level="debug">
+            <appender-ref ref="Kafka"/>
+            <appender-ref ref="Console"/>
+        </logger>
+        <!-- Root节点⽤来指定项⽬的根⽇志，如果没有单独指定Logger，那么就会默认使⽤该Root
+       ⽇志输出 -->
+        <root level="info">
+            <appender-ref ref="Console"/>
+            <!--<appender-ref ref="File"/>-->
+            <!--<appender-ref ref="RollingFile"/>-->
+            <!--<appender-ref ref="Kafka"/>-->
+        </root>
+    </loggers>
+</configuration>
