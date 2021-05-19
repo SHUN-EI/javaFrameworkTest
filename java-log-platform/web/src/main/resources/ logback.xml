@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds" debug="false">
+    <!-- lOGGER PATTERN 根据个⼈喜好选择匹配 -->
+    <property name="logPattern"
+              value="logback:[ %-5level] [%date{HH:mm:ss.SSS}] %logger{96}
+[%line] [%thread]- %msg%n"></property>
+    <!-- 控制台的标准输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logPattern}</pattern>
+        </encoder>
+    </appender>
+    <!-- This example configuration is probably most unreliable under failure
+   conditions but wont block your application at all -->
+    <appender name="kafka"
+              class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%msg%n</pattern>
+        </encoder>
+        <topic>filebeat</topic>
+        <!-- we don't care how the log messages will be partitioned -->
+        <keyingStrategy
+                class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy"/>
+        <!-- use async delivery. the application threads are not blocked by
+       logging -->
+        <deliveryStrategy
+                class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
+        <!-- each <producerConfig> translates to regular kafka-client config
+       (format: key=value) -->
+        <!-- producer configs are documented here:
+       https://kafka.apache.org/documentation.html#newproducerconfigs -->
+        <!-- bootstrap.servers is the only mandatory producerConfig -->
+        <producerConfig>bootstrap.servers=39.108.182.26:9092</producerConfig>
+        <!-- don't wait for a broker to ack the reception of a batch. -->
+        <producerConfig>acks=0</producerConfig>
+        <!-- wait up to 1000ms and collect log messages before sending them as
+       a batch -->
+        <producerConfig>linger.ms=1000</producerConfig>
+        <!-- even if the producer buffer runs full, do not block the
+       application but start to drop messages -->
+        <producerConfig>max.block.ms=0</producerConfig>
+        <!-- define a client-id that you use to identify yourself against the
+       kafka broker -->
+        <producerConfig>client.id=${HOSTNAME}-${CONTEXT_NAME}-logbackrelaxed</producerConfig>
+        <!-- there is no fallback <appender-ref>. If this appender cannot
+       deliver, it will drop its messages. -->
+    </appender>
+    <logger name="kafka">
+        <appender-ref ref="kafka"/>
+    </logger>
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
