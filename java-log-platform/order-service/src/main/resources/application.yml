@@ -1,8 +1,8 @@
 server:
-  port: 9980
+  port: 9982
 spring:
   application:
-    name: java-log-platform-web
+    name: java-log-platform-order-service
   cloud:
     nacos: #注册中心地址
       discovery:

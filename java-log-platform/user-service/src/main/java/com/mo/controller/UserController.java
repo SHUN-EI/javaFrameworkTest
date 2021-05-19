@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by mo on 2021/5/20
  */
-@RequestMapping("/user/api")
+@RequestMapping("/user")
 @RestController
 public class UserController {
 
-    private Logger logger = LoggerFactory.getLogger("kafka");
+    private static Logger logger = LoggerFactory.getLogger("kafka");
 
     @GetMapping("/test")
     public Object test() {

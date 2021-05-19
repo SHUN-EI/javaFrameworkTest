@@ -8,23 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by mo on 2021/5/19
+ * Created by mo on 2021/5/20
  */
+@RequestMapping("/order")
 @RestController
-@RequestMapping("/api")
-public class ApiController {
+public class OrderController {
 
-    private static final Logger logger = LoggerFactory.getLogger("kafka");
+    private static Logger logger = LoggerFactory.getLogger("kafka");
 
     @GetMapping("/test")
     public Object test() {
 
         LogDO logDo = LogDO.builder()
-                .rid("requestId")
+                .rid(System.currentTimeMillis() + "")
                 .sid("user")
-                .tid("pc")
-                .from("nginx")
-                .message("I am from nginx")
+                .tid("windows")
+                .from("java:order")
+                .message("I am from order")
                 .build();
 
         logger.info(logDo.toString());
