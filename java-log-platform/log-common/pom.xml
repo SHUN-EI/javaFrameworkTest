@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common</artifactId>
+    <artifactId>log-common</artifactId>
 
     <dependencies>
         <dependency>
@@ -30,4 +30,5 @@
             <!--<scope>provided</scope>-->
         </dependency>
     </dependencies>
+
 </project>

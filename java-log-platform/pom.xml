@@ -15,7 +15,7 @@
     <modules>
         <module>web</module>
         <module>user-service</module>
-        <module>common</module>
+        <module>log-common</module>
     </modules>
 
     <properties>

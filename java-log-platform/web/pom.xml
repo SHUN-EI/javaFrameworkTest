@@ -14,10 +14,9 @@
     <dependencies>
         <dependency>
             <groupId>com.mo</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>log-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 
 

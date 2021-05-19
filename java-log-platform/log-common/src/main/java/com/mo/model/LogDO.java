@@ -1,14 +1,16 @@
 package com.mo.model;
 
 import com.alibaba.fastjson.JSON;
+import lombok.Builder;
 import lombok.Data;
 
 /**
  * Created by mo on 2021/5/19
- * ⽇志信息对象
  */
+@Builder
 @Data
-public class LogDo {
+public class LogDO {
+
     /**
      * rid（requestId）：⼀次请求的唯⼀标示，⽣成后⼀直传递到调⽤结束
      */
