@@ -1,0 +1,9 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: java-log-platform
+  cloud:
+    nacos: #注册中心地址
+      discovery:
+        server-addr: 39.108.182.26:8848
