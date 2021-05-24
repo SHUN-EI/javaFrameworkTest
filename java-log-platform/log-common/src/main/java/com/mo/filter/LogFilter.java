@@ -28,6 +28,7 @@ public class LogFilter implements Filter {
     //slf4j的好处，utils被其他项⽬引⽤时不会给对⽅的⽇志产⽣⼲扰
     private Logger logger = LoggerFactory.getLogger("kafka");
 
+    public static ThreadLocal<LogDO> threadLocal = new ThreadLocal<>();
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -40,6 +41,9 @@ public class LogFilter implements Filter {
 
         LogDO logDO = LogDO.builder().rid(rid).sid("sid").tid(tid).from(appName)
                 .ip(ip).url(url).message("I am filter").build();
+
+        //通过threadLocal 传递请求信息
+        threadLocal.set(logDO);
 
         logger.info(logDO.toString());
         chain.doFilter(request, response);
