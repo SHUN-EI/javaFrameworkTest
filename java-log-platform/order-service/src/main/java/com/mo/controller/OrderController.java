@@ -1,5 +1,6 @@
 package com.mo.controller;
 
+import com.mo.aspect.LogInfo;
 import com.mo.filter.LogFilter;
 import com.mo.model.LogDO;
 import com.mo.service.OrderService;
@@ -22,6 +23,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @LogInfo
     @GetMapping("/addOrder")
     public Object addOrder() {
 

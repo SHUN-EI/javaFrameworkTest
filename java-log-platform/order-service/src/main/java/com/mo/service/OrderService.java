@@ -1,5 +1,6 @@
 package com.mo.service;
 
+import com.mo.aspect.LogInfo;
 import com.mo.filter.LogFilter;
 import com.mo.model.LogDO;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ public class OrderService {
 
     private static final Logger logger = LoggerFactory.getLogger("kafka");
 
+    @LogInfo
     public String addOrder() {
 
         LogDO logDO = LogFilter.threadLocal.get();
