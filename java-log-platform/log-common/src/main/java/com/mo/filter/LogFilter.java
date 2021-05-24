@@ -3,6 +3,7 @@ package com.mo.filter;
 
 import com.mo.model.LogDO;
 import com.mo.utils.CommonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,12 +35,13 @@ public class LogFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest servletRequest = (HttpServletRequest) request;
-        String rid = CommonUtil.getStringNumRandom(18);
-        String tid = CommonUtil.getDevice(servletRequest.getHeader("User-Agent"));
-        String ip = CommonUtil.getIpAddress(servletRequest);
+        String rid = StringUtils.defaultIfBlank(servletRequest.getHeader("rid"), CommonUtil.getStringNumRandom(18));
+        String sid = StringUtils.defaultIfBlank(servletRequest.getHeader("sid"), "sid");
+        String tid = StringUtils.defaultIfBlank(servletRequest.getHeader("tid"), CommonUtil.getDevice(servletRequest.getHeader("User-Agent")));
+        String ip = StringUtils.defaultIfBlank(servletRequest.getHeader("ip"), CommonUtil.getIpAddress(servletRequest));
         String url = "java: " + servletRequest.getRequestURI();
 
-        LogDO logDO = LogDO.builder().rid(rid).sid("sid").tid(tid).from(appName)
+        LogDO logDO = LogDO.builder().rid(rid).sid(sid).tid(tid).from(appName)
                 .ip(ip).url(url).message("I am filter").build();
 
         //通过threadLocal 传递请求信息
