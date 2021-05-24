@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>web</module>
         <module>user-service</module>
         <module>log-common</module>
         <module>order-service</module>

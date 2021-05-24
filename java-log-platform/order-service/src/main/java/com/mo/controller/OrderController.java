@@ -19,6 +19,12 @@ public class OrderController {
     @GetMapping("/test")
     public Object test() {
 
+        return "This is nginx forward test";
+    }
+
+    @GetMapping("/test-old")
+    public Object testOld() {
+
         LogDO logDo = LogDO.builder()
                 .rid(System.currentTimeMillis() + "")
                 .sid("user")
