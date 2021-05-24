@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by mo on 2021/5/20
  */
@@ -22,6 +26,26 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @LogInfo
+    @GetMapping("/login")
+    public String login(HttpServletRequest request, HttpServletResponse response) {
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        boolean flag = orderService.login(username, password);
+
+        if (flag) {
+            Cookie cookie = new Cookie("sid", username);
+            //设置path，让所有请求均可以获取
+            cookie.setPath("/");
+            response.addCookie(cookie);
+            return "success";
+        } else {
+            return "error";
+        }
+    }
 
     @LogInfo
     @GetMapping("/addOrder")

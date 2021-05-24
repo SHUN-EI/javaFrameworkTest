@@ -44,4 +44,10 @@ public class OrderService {
 
         return "下单成功";
     }
+
+    @LogInfo
+    public boolean login(String username, String password) {
+
+        return restTemplate.getForObject("http://java-log-platform-user-service/user/check?username=" + username + "&password=" + password, boolean.class);
+    }
 }

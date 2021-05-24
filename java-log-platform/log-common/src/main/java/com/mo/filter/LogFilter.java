@@ -12,6 +12,7 @@ import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -35,8 +36,20 @@ public class LogFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest servletRequest = (HttpServletRequest) request;
+
+        String cookieValue = null;
+        Cookie[] cookies = servletRequest.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("sid".equals(cookie.getName())) {
+                    cookieValue = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
         String rid = StringUtils.defaultIfBlank(servletRequest.getHeader("rid"), CommonUtil.getStringNumRandom(18));
-        String sid = StringUtils.defaultIfBlank(servletRequest.getHeader("sid"), "sid");
+        String sid = StringUtils.defaultIfBlank(servletRequest.getHeader("sid"), cookieValue);
         String tid = StringUtils.defaultIfBlank(servletRequest.getHeader("tid"), CommonUtil.getDevice(servletRequest.getHeader("User-Agent")));
         String ip = StringUtils.defaultIfBlank(servletRequest.getHeader("ip"), CommonUtil.getIpAddress(servletRequest));
         String url = "java: " + servletRequest.getRequestURI();

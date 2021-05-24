@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,6 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private static Logger logger = LoggerFactory.getLogger("kafka");
+
+    @LogInfo
+    @GetMapping("/check")
+    public Boolean check(@RequestParam("username") String username, @RequestParam("password") String password) {
+
+        //check username and password
+
+        LogDO logDO = LogFilter.threadLocal.get();
+        logDO.setMessage("correct user");
+        logger.info(logDO.toString());
+        return true;
+    }
 
     @LogInfo
     @GetMapping("/info")
