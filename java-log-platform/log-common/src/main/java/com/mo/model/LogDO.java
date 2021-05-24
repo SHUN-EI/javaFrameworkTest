@@ -31,6 +31,14 @@ public class LogDO {
      * 日志记录信息
      */
     private String message;
+    /**
+     * IP地址
+     */
+    private String ip;
+    /**
+     * 访问路径
+     */
+    private String url;
 
     /**
      *
