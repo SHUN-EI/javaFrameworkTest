@@ -1,5 +1,7 @@
 package com.mo.controller;
 
+import com.mo.aspect.LogInfo;
+import com.mo.filter.LogFilter;
 import com.mo.model.LogDO;
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
@@ -16,6 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private static Logger logger = LoggerFactory.getLogger("kafka");
+
+    @LogInfo
+    @GetMapping("/info")
+    public String info() {
+        LogDO logDO = LogFilter.threadLocal.get();
+        logDO.setMessage("UserController: info");
+        logger.info(logDO.toString());
+        return "曹操";
+    }
 
     @GetMapping("/test")
     public Object test() {
