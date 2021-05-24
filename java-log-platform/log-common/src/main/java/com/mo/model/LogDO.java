@@ -41,11 +41,17 @@ public class LogDO {
     private String url;
 
     /**
-     *
+     * 日志访问时间戳
+     */
+    private Long timestamp;
+
+    /**
      * @return
      */
     @Override
     public String toString() {
+        //生成日志信息的时候记录系统当前时间
+        this.setTimestamp(System.currentTimeMillis());
         return JSON.toJSONString(this);
     }
 }
