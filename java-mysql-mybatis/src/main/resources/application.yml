@@ -1,0 +1,13 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: mysql-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.151.99:3306/mo_mysql?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    hikari: # Hikari数据源专⽤配置
+      maximum-pool-size: 20
+      minimum-idle: 5

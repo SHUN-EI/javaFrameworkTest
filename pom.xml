@@ -21,6 +21,7 @@
         <module>java-bigData-search</module>
         <module>java-log-develop</module>
         <module>java-log-platform</module>
+        <module>java-mysql-mybatis</module>
     </modules>
 
     <groupId>com.mo</groupId>
